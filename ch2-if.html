@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การใช้ if version 1</title>
+    <title>การใช้ switch case</title>
 </head>
 
 <body>
@@ -18,17 +18,22 @@
         if (!isNaN(score) && score >= 0 && score <= 100) {
             let grade = "";
 
-            // กำหนดเกรดตามช่วงคะแนน
-            if (score >= 80) {
-                grade = "A";
-            } else if (score >= 70) {
-                grade = "B";
-            } else if (score >= 60) {
-                grade = "C";
-            } else if (score >= 50) {
-                grade = "D";
-            } else {
-                grade = "F";
+            // ใช้ switch case แทน if-else
+            switch (true) {
+                case (score >= 80):
+                    grade = "A";
+                    break;
+                case (score >= 70):
+                    grade = "B";
+                    break;
+                case (score >= 60):
+                    grade = "C";
+                    break;
+                case (score >= 50):
+                    grade = "D";
+                    break;
+                default:
+                    grade = "F";
             }
 
             // แสดงผลลัพธ์
