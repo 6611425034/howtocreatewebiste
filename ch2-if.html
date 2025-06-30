@@ -12,14 +12,16 @@
     <script>
         let input = prompt("พิมพ์ข้อความ (พิมพ์ 'จบ' เพื่อออก):");
         let result = ""; 
-        while ( result !== "จบ") { // เช็กว่าผู้ใช้พิมพ์ จบ หรือไม่
+        while (input !== "จบ") { // เช็กว่าผู้ใช้พิมพ์ จบ หรือไม่
+            
             result += input + " "; // รวมข้อความแต่ละรอบไว้
+            input = prompt("พิมพ์ข้อความ (พิมพ์ 'จบ' เพื่อออก):");
         }
 
         // แสดงผลลัพธ์บนหน้าเว็บ
 
         document.write("<h3>คุณได้ป้อนข้อความดังนี้:</h3>");
-        
+        document.write("<p style='color: green; font-size: 18px;'>" + result + "</p>");
     </script>
 </body>
 
