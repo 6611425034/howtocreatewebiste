@@ -10,38 +10,27 @@
 
 <body>
     <script>
-        // รับค่าคะแนนจากผู้ใช้
-        let scoreInput = prompt("กรุณากรอกคะแนนของคุณ (0 - 100): ");
-        let score = parseFloat(scoreInput);
-
-        // ตรวจสอบว่าเป็นตัวเลขและอยู่ในช่วงที่ถูกต้อง
-        if (!isNaN(score) && score >= 0 && score <= 100) {
-            let grade = "";
-
-            // ใช้ switch case แทน if-else
-            switch (true) {
-                case (score >= 80):
-                    grade = "A";
-                    break;
-                case (score >= 70):
-                    grade = "B";
-                    break;
-                case (score >= 60):
-                    grade = "C";
-                    break;
-                case (score >= 50):
-                    grade = "D";
-                    break;
-                default:
-                    grade = "F";
+        let total = 0; // ตัวแปรสะสมผลรวม
+        let count = 0; // ตัวแปรนับจ านวนนักเรียน
+        let score;
+        do {
+            // รับคะแนนจากผู้ใช้
+            score = prompt("กรุณากรอกคะแนนนักเรียน (กด OK โดยไม่กรอกเพื่อหยุด):");
+            console.log("score=", score); // ตรวจสอบค่า score
+            if (score !== "") {
+                // แปลงค่าที่รับมาเป็นตัวเลขและสะสม
+                total += parseFloat(score);
+                count++;
             }
-
-            // แสดงผลลัพธ์
-            document.write(`<h3>คุณได้เกรด <span style="color: blue;">${grade}</span> ด้วยคะแนน ${score} คะแนน</h3>`);
-            console.log(`เกรด: ${grade}, คะแนน: ${score}`);
+        } while (score !== ""); // หยุดเมื่อผู้ใช้ไม่กรอกอะไรเลย
+        // แสดงผลลัพธ์บนหน้าเว็บ
+        if (count > 0) {
+            const average = total / count;
+            document.write(`<h3>คณปอ้นคะแนนทังหมด ${count} คน</h3>`);
+            document.write(`<p>รวมคะแนน: ${total}</p>`);
+            document.write(`<p>คะแนนเฉลี่ย: ${average.toFixed(2)}</p>`);
         } else {
-            document.write(`<h3 style="color: red;">กรุณากรอกคะแนนที่ถูกต้อง (0 - 100)</h3>`);
-            console.log("ข้อมูลไม่ถูกต้อง");
+            document.write("<p>ยังไม่มีการกรอกคะแนน</p>");
         }
     </script>
 </body>
