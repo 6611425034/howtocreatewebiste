@@ -9,19 +9,30 @@
 </head>
 
 <body>
+    <h3>ตัวอย่าง รับคะแนนนักเรียนและหยุดเมื่อใส่ค่าว่าง</h3>
     <script>
-        let input = prompt("พิมพ์ข้อความ (พิมพ์ 'จบ' เพื่อออก):");
-        let result = ""; 
-        while (input !== "จบ") { // เช็กว่าผู้ใช้พิมพ์ จบ หรือไม่
-            
-            result += input + " "; // รวมข้อความแต่ละรอบไว้
-            input = prompt("พิมพ์ข้อความ (พิมพ์ 'จบ' เพื่อออก):");
-        }
-
+        let total = 0; // ตัวแปรสะสมผลรวม
+        let count = 0; // ตัวแปรนับจ านวนนักเรียน
+        let score;
+        do {
+            // รับคะแนนจากผู้ใช้
+            score = prompt("กรุณากรอกคะแนนนักเรียน (กด OK โดยไม่กรอกเพื่อหยุด):");
+            console.log("score=", score); // ตรวจสอบค่า score
+            if (score !== "") {
+                // แปลงค่าที่รับมาเป็นตัวเลขและสะสม
+                total += parseFloat(score);
+                count++;
+            }
+        } while (score !== ""); // หยุดเมื่อผู้ใช้ไม่กรอกอะไรเลย
         // แสดงผลลัพธ์บนหน้าเว็บ
-
-        document.write("<h3>คุณได้ป้อนข้อความดังนี้:</h3>");
-        document.write("<p style='color: green; font-size: 18px;'>" + result + "</p>");
+        if (count > 0) {
+            const average = total / count;
+            document.write(`<h3>ค ุ ณปอ ้ นคะแนนท ้ ั งหมด ${count} คน</h3>`);
+            document.write(`<p>รวมคะแนน: ${total}</p>`);
+            document.write(`<p>คะแนนเฉลี่ย: ${average.toFixed(2)}</p>`);
+        } else {
+            document.write("<p>ยังไม่มีการกรอกคะแนน</p>");
+        }
     </script>
 </body>
 
