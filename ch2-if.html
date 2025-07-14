@@ -10,53 +10,36 @@
 </head>
 
 <body>
-    <h2>สิ่งที่ต้องท า (To-Do List)</h2>
-    <!-- ช่องรับข้อความ และปุ่มเพิ่มงาน -->
-    <input type="text" id="taskInput" placeholder="เพิ่มงานที่ต้องท า">
-    <button onclick="addTask()">เพิ่ม</button>
-    <!-- รายการงานจะแสดงใน list นี้-->
-    <ul id="taskList"></ul>
+    <h2>ค้นหารายชื่อ</h2>
+    <!-- ช่อง input ส าหรับพิมพ์ค าค้น -->
+    <input type="text" id="search" placeholder="ค้นหาชื่อ...">
+    <!-- แสดงรายชื่อที่ตรงกับค าค้น -->
+    <ul id="namesList"></ul>
     <script>
-        // สร้างอาร์เรย์เพื่อเก็บรายการงาน
-        const tasks = [];
-        // อ้างอิง element ul ที่จะใช้แสดงรายการ
-        const list = document.getElementById("taskList");
-        // ฟังก์ชันเมื่อกดปุ่ม "เพิ่ม"
-        function addTask() {
-            const taskInput = document.getElementById("taskInput")
-            const task = taskInput.value.trim(); // เอาค่าและตัดช่องว่าง
-            // ถ้าไม่ใส่ข้อความ ไม่ให้เพิ่มเข้า list
-            if (task === "") {
-                alert("กรุณากรอกงานที่ต้องท า");
-                return;
-            }
-            tasks.push(task); // เพิ่มงานใหม่เข้าอาร์เรย์
-            updateList(); // เรียกฟังก์ชันแสดงผลใหม่
-            taskInput.value = ""; // เคลียร์input หลังเพิ่ม
-        }
-        // ฟังก์ชันแสดงรายการทั้งหมดใน list
-        function updateList() {
-            list.innerHTML = ""; // ล้างรายการเก่าก่อน
-            // วนลูปอาร์เรย์แล้วสร้าง <li> ส าหรับแต่ละรายการ
-            tasks.forEach((t, index) => {
+        // อาร์เรย์ของรายชื่อทั้งหมด
+        const names = ["นิด", "หน่อย", "ปอ", "ตั้ม", "เบียร์", "แน็ต", "ตาล"];
+        // อ้างอิง <ul> ที่จะแสดงรายชื่อ
+        const list = document.getElementById("namesList");
+        // อ้างอิงช่อง input ค้นหา
+        const searchBox = document.getElementById("search");
+        // ฟังก์ชันส าหรับแสดงรายการรายชื่อจากอาร์เรย์
+        function renderList(filteredNames) {
+            list.innerHTML = ""; // ล้าง <ul> เดิมก่อนทุกครั้ง
+            // วนลูปชื่อทั้งหมดแล้วสร้าง <li> แสดงแต่ละชื่อ
+            filteredNames.forEach(name => {
                 const li = document.createElement("li");
-                li.textContent = `${index + 1}. ${t}`;
-                li.onclick = function () {
-                    if (!li.querySelector("del")) {
-                        const del = document.createElement("del");
-                        del.textContent = li.textContent;
-                        li.textContent = "";
-                        li.appendChild(del);
-                    } else {
-                        const del = li.querySelector("del");
-                        li.textContent = del.textContent;
-                    }
-                };
-
-              
+                li.textContent = name;
                 list.appendChild(li);
             });
         }
+        // เมื่อผู้ใช้พิมพ์ลงในช่องค้นหา จะกรองข้อมูลแบบ real-time
+        searchBox.addEventListener("input", () => {
+            const keyword = searchBox.value.toLowerCase(); // แปลงเป็นตัวพิมพ์เล็ก
+            const result = names.filter(n => n.toLowerCase().includes(keyword)); // กรองชื่อที่มีค าค้น
+            renderList(result); // แสดงผลที่กรองแล้ว
+        });
+        // เรียกแสดงรายชื่อทั้งหมดเมื่อโหลดหน้าเว็บ
+        renderList(names);
     </script>
 </body>
 
