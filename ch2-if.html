@@ -10,40 +10,67 @@
 </head>
 
 <body>
-    <!-- 🔹 กิจกรรมที่ 1: คลิกปุ่มเพื่อแสดงข้อความ -->
-    <div class="section">
-        <h3>กิจกรรมที่ 1: คลิกปุ่มเพื่อแสดงข้อความ</h3>
-        <button id="showMessage">คลิกฉัน</button>
-        <button id="showMessage2">คลิกฉัน2</button>
-        <button id="showMessage3">คลิกฉัน3</button>
-
-        <p id="output1"></p>
-    </div>
+    <h2>ระบบสั่งซื้อสินค้า</h2>
+    <!-- แบบฟอร์มสินค้า -->
+    <form onsubmit="return processOrder()">
+        <!-- รายการสินค้าเดียว -->
+        <p><strong>สินค้า:</strong> สินค้า A</p>
+        <p><strong>ราคาต่อชิ้น:</strong> <span id="price">120</span> บาท</p>
+        <!-- ป้อนจ านวนสินค้า จ ากัดระหว่าง 1–100 -->
+        <p>
+            <label for="qty">จ านวน:</label>
+            <input type="number" id="qty" value="1" onchange="updateTotal()">
+        </p>
+        <!-- แสดงราคารวมทันที-->
+        <p><strong>ราคารวม:</strong> <span id="total">120</span> บาท</p>
+        <!-- พื้นที่แสดงข้อความ -->
+        <p id="message"></p>
+        <!-- ปุ่มส่งฟอร์ม -->
+        <button type="submit">ยืนยันการสั่งซื้อ</button>
+    </form>
+    <!-- พื้นที่แสดงใบเสร็จ -->
+    <div id="receipt" class="receipt"></div>
     <script>
-        // 👉 กิจกรรม 1: แสดงข้อความเมื่อคลิกปุ่ม
-        const btn1 = document.getElementById("showMessage");
-        const btn2 = document.getElementById("showMessage2");
-        const btn3 = document.getElementById("showMessage3");
-        const output1 = document.getElementById("output1");
-        btn1.addEventListener("click", function () {
-            output1.textContent =
+        // ฟังก์ชันอัปเดตราคารวมเมื่อจ านวนสินค้าเปลี่ยน
+        function updateTotal() {
+            const qty = parseInt(document.getElementById("qty").value);
+            const price = parseFloat(document.getElementById("price").textContent);
+            const total = Math.min(Math.max(qty, 1), 100) * price;
+            document.getElementById("total").textContent = total;
+            return processOrder()
+        }
+        // ฟังก์ชันประมวลผลเมื่อกดยืนยันการสั่งซื้อ
+        function processOrder() {
+            const qtyInput = document.getElementById("qty");
+            let qty = parseInt(qtyInput.value);
+            const price = parseFloat(document.getElementById("price").textContent);
+            const messageBox = document.getElementById("message");
+            const receiptBox = document.getElementById("receipt");
+            // ตรวจสอบค่าจ านวนสินค้าว่าอยู่ในช่วง 1–100 หรือไม่
+            if (isNaN(qty) || qty < 1 || qty > 100) {
+                messageBox.textContent = "❌ กรุณาป้อนจ านวนสินค้าในช่วง 1–100";
+                messageBox.className = "error";
+                receiptBox.innerHTML = ""; // ล้างใบเสร็จถ้ามี
+                return false;
+            }
 
-                "คุณคลิกปุ่มแล้ว! 🎉";
-
-        });
-        btn2.addEventListener("click", function () {
-            output1.textContent =
-
-                "คุณคลิกปุ่มแล้ว! 2🎉";
-
-        });
-        btn3.addEventListener("click", function () {
-            output1.textContent =
-
-                "คุณคลิกปุ่มแล้ว! 3🎉";
-
-        });
+            // ค านวณราคารวม
+            const total = qty * price
+            // แสดงข้อความส าเร็จ
+            messageBox.textContent = "✅การสั่งซื้อส าเร็จ!";
+            messageBox.className = "success";
+            // สร้างใบเสร็จอย่างง่าย
+            const receiptHTML = `
+            <h3>ใบเสร็จ</h3>
+            <p>สินค้า: สินค้า A</p>
+            <p>ราคาต่อชิ้น: ${price
+                    } บาท</p >
+            <p>จ านวน: ${qty} ชิ้น</p>
+            <p><strong>รวมทั้งสิ้น: ${total} บาท</strong></p> `;
+            receiptBox.innerHTML = receiptHTML;
+            return false; // ไม่ส่งฟอร์มจริง
+            }
     </script>
 </body>
 
-</html >
+</html>
