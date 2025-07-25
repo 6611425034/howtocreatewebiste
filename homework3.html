@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>บันทึกรายรับรายจ่าย</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-20 flex items-center justify-center p-4">
+  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+    <h1 class="text-2xl font-bold mb-6 text-center">บันทึกรายรับรายจ่าย</h1>
+
+    <form id="entryForm" class="mb-6 grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <input datepicker id="date" type="text" class= "border  py-2 rounded" placeholder=" ระบุวันที่">
+      <input type="text" id="action" placeholder="รายการที่ทำ" class="border px-3 py-2 rounded" required />
+      <input type="number" id="money" placeholder="จำนวน (+ / -)" class="border px-3 py-2 rounded" required />
+      <button type="submit" class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">เพิ่ม</button>
+    </form>
+
+    
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2 text-left">วันที่</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">รายการที่ทำ</th>
+            <th class="border border-gray-300 px-4 py-2 text-right">จำนวนเงิน</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">ลบข้อมูล</th>
+          </tr>
+        </thead>
+        <tbody id="entryList">
+          <!-- Entries will go here -->
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-3 text-right">
+      <span class="font-semibold text-lg">ทั้งหมด: </span>
+      <span id="total" class="font-bold text-green-600 text-lg">$0.00</span>
+    </div>
+  </div>
+
+  <script>
+    let entries = JSON.parse(localStorage.getItem("moneyEntries")) || [];
+
+    const form = document.getElementById("entryForm");
+    const dateInput = document.getElementById("date");
+    const actionInput = document.getElementById("action");
+    const moneyInput = document.getElementById("money");
+    const entryList = document.getElementById("entryList");
+    const totalDisplay = document.getElementById("total");
+
+    function updateLocalStorage() {
+      localStorage.setItem("moneyEntries", JSON.stringify(entries));
+    }
+
+function calculateTotal() {
+  const total = entries.reduce((sum, e) => sum + parseFloat(e.money), 0);
+  totalDisplay.textContent = (total >= 0 ? '+' : '-') + Math.abs(total).toFixed(2) + " บาท";
+  totalDisplay.className = total >= 0
+    ? "font-bold text-green-600 text-lg"
+    : "font-bold text-red-600 text-lg";
+}
+
+function renderEntries() {
+  entryList.innerHTML = "";
+  entries.forEach((entry, index) => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td class="border border-gray-300 px-4 py-2">${entry.date}</td>
+      <td class="border border-gray-300 px-4 py-2">${entry.action}</td>
+      <td class="border border-gray-300 px-4 py-2 text-right ${entry.money >= 0 ? 'text-green-600' : 'text-red-600'}">
+        ${entry.money >= 0 ? '+' : '-'}${Math.abs(entry.money).toFixed(2)} บาท
+      </td>
+      <td class="border border-gray-300 px-4 py-2 text-center">
+        <button class="text-red-600 hover:text-red-800 font-bold" onclick="removeEntry(${index})">✖</button>
+      </td>
+    `;
+
+    entryList.appendChild(tr);
+  });
+  calculateTotal();
+}
+
+
+    function removeEntry(index) {
+      entries.splice(index, 1);
+      updateLocalStorage();
+      renderEntries();
+    }
+
+    function clear() {
+        localStorage.clear();
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Basic validation for date to avoid empty
+      if (!dateInput.value || !actionInput.value || !moneyInput.value) return;
+
+      const newEntry = {
+        date: dateInput.value,
+        action: actionInput.value.trim(),
+        money: parseFloat(moneyInput.value),
+      };
+
+      entries.push(newEntry);
+      updateLocalStorage();
+      renderEntries();
+      form.reset();
+    });
+
+    // Render entries on page load
+    renderEntries();
+
+    // Make removeEntry global to be callable from inline onclick
+    window.removeEntry = removeEntry;
+  </script>
+</body>
+</html>
