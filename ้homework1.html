@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ตรวจสอบอายุบรรลุนิติภาวะ</title>
+<style>
+  body { font-family: sans-serif; }
+  h2 { color: #333; }
+  hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+  #result { font-weight: bold; margin-top: 10px; }
+  .adult-icon { color: green; }
+  .minor-icon { color: red; }
+</style>
+</head>
+<body>
+
+  <h2>ตรวจสอบอายุบรรลุนิติภาวะ</h2>
+  <input type="number" id="ageInput" placeholder="กรอกอายุของคุณ">
+  <button onclick="checkAge()">ตรวจสอบ</button>
+
+  <hr>
+
+  <div id="result"></div>
+
+  <script>
+    // ฟังก์ชันที่รับอายุ แล้วตรวจสอบว่าเกิน 18 หรือไม่
+    function isAdult(age) {
+      if (age >= 18) {
+        return "คุณบรรลุนิติภาวะแล้ว <span class='adult-icon'>&#10003;</span>"; // Checkmark icon
+      } else {
+        return "คุณยังไม่บรรลุนิติภาวะ <span class='minor-icon'>&#10006;</span>"; // Cross icon
+      }
+    }
+
+    // ฟังก์ชันหลักที่รับค่าจาก input แล้วแสดงผล
+    function checkAge() {
+      // อ่านค่าที่ผู้ใช้กรอกและแปลงเป็นตัวเลข
+      const age = parseInt(document.getElementById("ageInput").value);
+
+      // ตรวจสอบว่า age เป็นตัวเลขที่ถูกต้องหรือไม่
+      if (isNaN(age) || age < 0) {
+        document.getElementById("result").innerHTML = "กรุณากรอกอายุเป็นตัวเลขที่ถูกต้อง";
+        return;
+      }
+
+      // เรียกใช้ฟังก์ชัน isAdult เพื่อประมวลผล
+      const message = isAdult(age);
+
+      // แสดงข้อความผลลัพธ์ในหน้าเว็บเรียนด้วย innerHTML
+      document.getElementById("result").innerHTML = message;
+    }
+  </script>
+
+</body>
+</html>
