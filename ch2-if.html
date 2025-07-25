@@ -1,46 +1,54 @@
 <!DOCTYPE html>
-<html lang="th">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>การใช้ switch case</title>
+<title>ตรวจสอบอายุบรรลุนิติภาวะ</title>
+<style>
+  body { font-family: sans-serif; }
+  h2 { color: #333; }
+  hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+  #result { font-weight: bold; margin-top: 10px; }
+  .adult-icon { color: green; }
+  .minor-icon { color: red; }
+</style>
 </head>
-
 <body>
-    <h2>ค้นหารายชื่อ</h2>
-    <!-- ช่อง input ส าหรับพิมพ์ค าค้น -->
-    <input type="text" id="search" placeholder="ค้นหาชื่อ...">
-    <!-- แสดงรายชื่อที่ตรงกับค าค้น -->
-    <ul id="namesList"></ul>
-    <script>
-        // อาร์เรย์ของรายชื่อทั้งหมด
-        const names = ["นิด", "หน่อย", "ปอ", "ตั้ม", "เบียร์", "แน็ต", "ตาล"];
-        // อ้างอิง <ul> ที่จะแสดงรายชื่อ
-        const list = document.getElementById("namesList");
-        // อ้างอิงช่อง input ค้นหา
-        const searchBox = document.getElementById("search");
-        // ฟังก์ชันส าหรับแสดงรายการรายชื่อจากอาร์เรย์
-        function renderList(filteredNames) {
-            list.innerHTML = ""; // ล้าง <ul> เดิมก่อนทุกครั้ง
-            // วนลูปชื่อทั้งหมดแล้วสร้าง <li> แสดงแต่ละชื่อ
-            filteredNames.forEach(name => {
-                const li = document.createElement("li");
-                li.textContent = name;
-                list.appendChild(li);
-            });
-        }
-        // เมื่อผู้ใช้พิมพ์ลงในช่องค้นหา จะกรองข้อมูลแบบ real-time
-        searchBox.addEventListener("input", () => {
-            const keyword = searchBox.value.toLowerCase(); // แปลงเป็นตัวพิมพ์เล็ก
-            const result = names.filter(n => n.toLowerCase().includes(keyword)); // กรองชื่อที่มีค าค้น
-            renderList(result); // แสดงผลที่กรองแล้ว
-        });
-        // เรียกแสดงรายชื่อทั้งหมดเมื่อโหลดหน้าเว็บ
-        renderList(names);
-    </script>
-</body>
 
+  <h2>ตรวจสอบอายุบรรลุนิติภาวะ</h2>
+  <input type="number" id="ageInput" placeholder="กรอกอายุของคุณ">
+  <button onclick="checkAge()">ตรวจสอบ</button>
+
+  <hr>
+
+  <div id="result"></div>
+
+  <script>
+    // ฟังก์ชันที่รับอายุ แล้วตรวจสอบว่าเกิน 18 หรือไม่
+    function isAdult(age) {
+      if (age >= 18) {
+        return "คุณบรรลุนิติภาวะแล้ว <span class='adult-icon'>&#10003;</span>"; // Checkmark icon
+      } else {
+        return "คุณยังไม่บรรลุนิติภาวะ <span class='minor-icon'>&#10006;</span>"; // Cross icon
+      }
+    }
+
+    // ฟังก์ชันหลักที่รับค่าจาก input แล้วแสดงผล
+    function checkAge() {
+      // อ่านค่าที่ผู้ใช้กรอกและแปลงเป็นตัวเลข
+      const age = parseInt(document.getElementById("ageInput").value);
+
+      // ตรวจสอบว่า age เป็นตัวเลขที่ถูกต้องหรือไม่
+      if (isNaN(age) || age < 0) {
+        document.getElementById("result").innerHTML = "กรุณากรอกอายุเป็นตัวเลขที่ถูกต้อง";
+        return;
+      }
+
+      // เรียกใช้ฟังก์ชัน isAdult เพื่อประมวลผล
+      const message = isAdult(age);
+
+      // แสดงข้อความผลลัพธ์ในหน้าเว็บเรียนด้วย innerHTML
+      document.getElementById("result").innerHTML = message;
+    }
+  </script>
+
+</body>
 </html>
