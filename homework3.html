@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody id="entryList">
-          <!-- Entries will go here -->
+
         </tbody>
       </table>
     </div>
@@ -98,7 +98,6 @@ function renderEntries() {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // Basic validation for date to avoid empty
       if (!dateInput.value || !actionInput.value || !moneyInput.value) return;
 
       const newEntry = {
@@ -113,10 +112,8 @@ function renderEntries() {
       form.reset();
     });
 
-    // Render entries on page load
     renderEntries();
 
-    // Make removeEntry global to be callable from inline onclick
     window.removeEntry = removeEntry;
   </script>
 </body>
