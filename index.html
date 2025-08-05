@@ -1,255 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>การบ้าน</title>
-  <style>@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap'); * {font-family: "mali";}</style>
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;700&display=swap');
+
+    * {
+      font-family: "Mali", sans-serif;
+    }
+
+    #matter-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0; /* put behind content */
+      pointer-events: none; /* allow clicks to pass through */
+    }
+
+    #matter-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      pointer-events: auto; /* important for drag interaction */
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
 
-  <h1 class="text-3xl font-bold text-gray-800 mb-10">รายงานการบ้าน</h1>
+<body class="relative bg-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
-    
+  <!-- Wrapper to hold Matter.js container in background -->
+  <div id="matter-container"></div>
+
+  <!-- Content on top -->
+  <h1 class="text-3xl font-bold text-gray-800 mb-10 relative z-10">รายงานการบ้าน</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl w-full relative z-10">
+
+    <!-- การบ้านที่ 1 -->
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">
-        การบ้านที่ 1
-      </div>
-       <div class="p-6">
+      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">การบ้านที่ 1</div>
+      <div class="p-6">
         <p class="text-gray-700 mb-4">
-          1.ให้เขียนโปรแกรมการทำงานด้วยการรับค่าและแสดงผล
-          <br>
+          1.ให้เขียนโปรแกรมการทำงานด้วยการรับค่าและแสดงผล<br>
           2.โจทย์ปัญหาต้องเป็นทำงานแบบโครงสร้างตามลำดับเท่านั้น
         </p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            <a href="homework1.html">ตรวจสอบ</a>
-        </button>
+        <a href="homework1.html">
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">ตรวจสอบ</button>
+        </a>
       </div>
     </div>
 
+    <!-- การบ้านที่ 2 -->
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">
-        การบ้านที่ 2
-      </div>
+      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">การบ้านที่ 2</div>
       <div class="p-6">
         <p class="text-gray-700 mb-4">
-         1.ให้เขียนโปรแกรมการทำงานด้วยการรับค่าและแสดงผล
-         <br>
-         2.โจทย์ปัญหาต้องเป็นทำงานแบบโครงสร้างแบบเงื่อนไข if-else และ switch case  รวมเป็น 2 ข้อ
+          1.ให้เขียนโปรแกรมการทำงานด้วยการรับค่าและแสดงผล<br>
+          2.โจทย์ปัญหาต้องเป็นทำงานแบบโครงสร้างแบบเงื่อนไข if-else และ switch case รวมเป็น 2 ข้อ
         </p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          <a href="homework2.html">ตรวจสอบ</a>
-        </button>
+        <a href="homework2.html">
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">ตรวจสอบ</button>
+        </a>
       </div>
     </div>
-    
+
+    <!-- การบ้านที่ 3 -->
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">
-        การบ้านที่ 3
-      </div>
+      <div class="bg-blue-600 text-white text-lg font-semibold px-6 py-4">การบ้านที่ 3</div>
       <div class="p-6">
         <p class="text-gray-700 mb-4">
-          1.ให้นักศึกษาเขียนเว็บเพื่อรวบรวมการบ้านทั้งหมดที่ได้เรียนไป
-          <br>
-          2.ให้นักศึกษาออกแบบและพัฒนาโปรแกรมมา 1 โปรแกรม ที่เกี่ยวกับ สุขภาพ ความงาม การเงิน 
+          1.ให้นักศึกษาเขียนเว็บเพื่อรวบรวมการบ้านทั้งหมดที่ได้เรียนไป<br>
+          2.ให้นักศึกษาออกแบบและพัฒนาโปรแกรมมา 1 โปรแกรม ที่เกี่ยวกับ สุขภาพ ความงาม การเงิน
         </p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          <a href="homework3.html">ตรวจสอบ</a>
-        </button>
+        <a href="homework3.html">
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">ตรวจสอบ</button>
+        </a>
       </div>
     </div>
 
   </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-<script>
-  const {
-    Engine,
-    Render,
-    Runner,
-    Bodies,
-    Composite,
-    Composites,
-    Constraint,
-    Mouse,
-    MouseConstraint,
-    Body,
-    Events
-  } = Matter;
 
-  const engine = Engine.create();
-  const world = engine.world;
+  <!-- Matter.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    const {
+      Engine, Render, Runner, Bodies, Composite, Composites, Constraint,
+      Mouse, MouseConstraint, Body, Events
+    } = Matter;
 
-  const render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      wireframes: false,
-      background: "#eef"
-    }
-  });
+    // Setup engine and world
+    const engine = Engine.create();
+    const world = engine.world;
 
-  Render.run(render);
-  Runner.run(Runner.create(), engine);
-
-  // Anchor point
-  const anchorPoint = { x: 1000, y: -10 };
-
-  // Create invisible rope bodies
-  const group = Body.nextGroup(true);
-  const rope = Composites.stack(anchorPoint.x, anchorPoint.y + 15, 3, 8, 0, 10, (x, y) => {
-    return Bodies.rectangle(x, y, 10, 20, {
-      collisionFilter: { group: group },
-      render: { visible: false }
+    // Create the renderer
+    const render = Render.create({
+      element: document.getElementById('matter-container'),
+      engine: engine,
+      options: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        wireframes: false,
+        background: 'transparent'
+      }
     });
-  });
 
-  Composites.chain(rope, 0.5, 0, 0.5, 0, {
-    stiffness: 1,
-    length: 2,
-    render: { visible: false }
-  });
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
 
-  Composite.add(world, Constraint.create({
-    pointA: anchorPoint,
-    bodyB: rope.bodies[0],
-    pointB: { x: 0, y: -10 },
-    stiffness: 1,
-    render: { visible: false }
-  }));
+    // We'll declare rope and idCard outside so we can access them for reposition on resize
+    let rope, idCard, ropeToCard;
 
-  // ID card body
-  const idCard = Bodies.rectangle(anchorPoint.x, anchorPoint.y + 300, 100, 140, {
-    collisionFilter: { group: group },
-    frictionAir: 0.02, // smooth swinging
-    render: {
-      fillStyle: '#ffffff',
-      strokeStyle: '#999',
-      lineWidth: 2
+    // Group for no collision between rope parts
+    const group = Body.nextGroup(true);
+
+    // Anchor point (dynamic based on window size)
+    function getAnchorPoint() {
+      // Center horizontally, slightly above top
+      return { x: 1200, y: -10 };
     }
-  });
 
-  // Attach rope to TOP of card so it swings naturally
-  const ropeToCard = Constraint.create({
-    bodyA: rope.bodies[rope.bodies.length - 1],
-    bodyB: idCard,
-    pointA: { x: 0, y: 10 },
-    pointB: { x: 0, y: -15 },
-    stiffness: 0.9,
-    render: { visible: false }
-  });
+    // Initialize rope and idCard bodies
+    function createRopeAndCard() {
+      // Remove old if exist
+      if (rope) Composite.remove(world, rope);
+      if (idCard) Composite.remove(world, idCard);
+      if (ropeToCard) Composite.remove(world, ropeToCard);
 
-  Composite.add(world, [rope, idCard, ropeToCard]);
+      const anchor = getAnchorPoint();
 
-  // Mouse drag
-  const mouse = Mouse.create(render.canvas);
-  const mouseConstraint = MouseConstraint.create(engine, {
-    mouse,
-    constraint: {
-      stiffness: 0.2,
-      render: { visible: false }
+      rope = Composites.stack(anchor.x, anchor.y + 15, 3, 8, 0, 10, (x, y) => {
+        return Bodies.rectangle(x, y, 10, 20, {
+          collisionFilter: { group: group },
+          render: { visible: false }
+        });
+      });
+
+      Composites.chain(rope, 0.5, 0, 0.5, 0, {
+        stiffness: 1,
+        length: 2,
+        render: { visible: false }
+      });
+
+      Composite.add(world, Constraint.create({
+        pointA: anchor,
+        bodyB: rope.bodies[0],
+        pointB: { x: 0, y: -10 },
+        stiffness: 1,
+        render: { visible: false }
+      }));
+
+      idCard = Bodies.rectangle(anchor.x, anchor.y + 300, 100, 140, {
+        collisionFilter: { group: group },
+        frictionAir: 0.02,
+        render: {
+          fillStyle: '#4169e1',
+          strokeStyle: '#999',
+          lineWidth: 2
+        }
+      });
+
+      ropeToCard = Constraint.create({
+        bodyA: rope.bodies[rope.bodies.length - 1],
+        bodyB: idCard,
+        pointA: { x: 0, y: 10 },
+        pointB: { x: 0, y: -15 },
+        stiffness: 0.9,
+        render: { visible: false }
+      });
+
+      Composite.add(world, [rope, idCard, ropeToCard]);
+
+      Body.setInertia(idCard, 1000);
     }
-  });
-  Composite.add(world, mouseConstraint);
-  render.mouse = mouse;
 
-  // Create the stripe pattern canvas
-  const patternCanvas = document.createElement('canvas');
-  patternCanvas.width = 20;
-  patternCanvas.height = 20;
-  const pctx = patternCanvas.getContext('2d');
-  pctx.fillStyle = '#444';
-  pctx.fillRect(0, 0, 20, 20);
-  pctx.strokeStyle = '#888';
-  pctx.lineWidth = 3;
-  pctx.beginPath();
-  pctx.moveTo(0, 20);
-  pctx.lineTo(20, 0);
-  pctx.stroke();
+    createRopeAndCard();
 
-  const photo = new Image();
-  photo.src = 'https://ultravet-pet.com/wp-content/uploads/2023/07/cat-breed-01-800x800.webp';
+    // Mouse control
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false }
+      }
+    });
+    Composite.add(world, mouseConstraint);
+    render.mouse = mouse;
 
+    // Canvas pattern for rope decoration
+    const patternCanvas = document.createElement('canvas');
+    patternCanvas.width = 20;
+    patternCanvas.height = 20;
+    const pctx = patternCanvas.getContext('2d');
+    pctx.fillStyle = '#4169e1';
+    pctx.fillRect(0, 0, 20, 20);
+    pctx.strokeStyle = '#ffff';
+    pctx.lineWidth = 3;
+    pctx.beginPath();
+    pctx.moveTo(0, 20);
+    pctx.lineTo(20, 0);
+    pctx.stroke();
 
+    const photo = new Image();
+    photo.src = 'https://ultravet-pet.com/wp-content/uploads/2023/07/cat-breed-01-800x800.webp';
 
-  // Custom rendering: strap, card, photo, text
-  Events.on(render, 'afterRender', () => {
-    const ctx = render.context;
+    // Draw loop after rendering
+    Events.on(render, 'afterRender', () => {
+      const ctx = render.context;
 
-    // Draw textured rope strap
-    const last = rope.bodies[rope.bodies.length - 1];
-    const x1 = anchorPoint.x;
-    const y1 = anchorPoint.y;
-    const x2 = last.position.x;
-    const y2 = last.position.y + 10;
+      const anchor = getAnchorPoint();
 
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    const angle = Math.atan2(dy, dx);
+      const last = rope.bodies[rope.bodies.length - 1];
+      const x1 = anchor.x;
+      const y1 = anchor.y;
+      const x2 = last.position.x;
+      const y2 = last.position.y + 10;
 
-    ctx.save();
-    ctx.translate(x1, y1);
-    ctx.rotate(angle);
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx);
 
-    const pattern = ctx.createPattern(patternCanvas, 'repeat');
-    ctx.fillStyle = pattern;
-    ctx.fillRect(0, -8, length, 17);
-    ctx.restore();
-
-    // Draw ID card
-    const pos = idCard.position;
-    const angleCard = idCard.angle;
-    ctx.save();
-    ctx.translate(pos.x, pos.y);
-    ctx.rotate(angleCard);
-
-    // Tab/clip
-    ctx.fillStyle = '#888';
-    ctx.fillRect(-20, -80, 40, 15);
-
-    // Card background
-    ctx.fillStyle = '#fff';
-    ctx.strokeStyle = '#ccc';
-    ctx.lineWidth = 2;
-    ctx.fillRect(-50, -60, 100, 120);
-    ctx.strokeRect(-50, -60, 100, 120);
-
-    // Photo box
-    if (photo.complete) {
       ctx.save();
-      ctx.beginPath();
-      ctx.rect(-20, -50, 40, 40);
-      ctx.clip();
-      ctx.drawImage(photo, -20, -50, 40, 40);
+      ctx.translate(x1, y1);
+      ctx.rotate(angle);
+
+      const pattern = ctx.createPattern(patternCanvas, 'repeat');
+      ctx.fillStyle = pattern;
+      ctx.fillRect(0, -8, length, 17);
       ctx.restore();
-    } else {
-      ctx.fillStyle = '#ddd';
-      ctx.fillRect(-20, -50, 40, 40);
-    }
 
-    // Text
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 12px Arial';
-    ctx.fillText('วิศรุต ดาราไก่', -38, 10);
-    ctx.font = '11px Arial';
-    ctx.fillText('ID: 6611425034', -40, 25);
-    ctx.fillText('นักศึกษา', -25, 40);
+      const pos = idCard.position;
+      const angleCard = idCard.angle;
+      ctx.save();
+      ctx.translate(pos.x, pos.y);
+      ctx.rotate(angleCard);
 
-    ctx.restore();
-  });
+      ctx.fillStyle = '#888';
+      ctx.fillRect(-20, -80, 40, 15);
 
-  Body.setInertia(idCard, 1000); // Higher = harder to rotate
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = '#ccc';
+      ctx.lineWidth = 2;
+      ctx.fillRect(-50, -60, 100, 120);
+      ctx.strokeRect(-50, -60, 100, 120);
 
-  // Responsive
-  window.addEventListener('resize', () => {
-    render.canvas.width = window.innerWidth;
-    render.canvas.height = window.innerHeight;
-    anchorPoint.x = window.innerWidth / 2;
-  });
-</script>
+      if (photo.complete) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(-20, -50, 40, 40);
+        ctx.clip();
+        ctx.drawImage(photo, -20, -50, 40, 40);
+        ctx.restore();
+      } else {
+        ctx.fillStyle = '#ddd';
+        ctx.fillRect(-20, -50, 40, 40);
+      }
+
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 12px Arial';
+      ctx.fillText('วิศรุต ดาราไก่', -38, 10);
+      ctx.font = '11px Arial';
+      ctx.fillText('ID: 6611425034', -40, 25);
+      ctx.fillText('นักศึกษา', -25, 40);
+      ctx.restore();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      // Update renderer size
+      render.canvas.width = window.innerWidth;
+      render.canvas.height = window.innerHeight;
+      render.options.width = window.innerWidth;
+      render.options.height = window.innerHeight;
+
+      // Remove and recreate rope and card at new anchor
+      createRopeAndCard();
+    });
+  </script>
 </body>
+
 </html>
