@@ -62,6 +62,194 @@
     </div>
 
   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+  const {
+    Engine,
+    Render,
+    Runner,
+    Bodies,
+    Composite,
+    Composites,
+    Constraint,
+    Mouse,
+    MouseConstraint,
+    Body,
+    Events
+  } = Matter;
 
+  const engine = Engine.create();
+  const world = engine.world;
+
+  const render = Render.create({
+    element: document.body,
+    engine: engine,
+    options: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      wireframes: false,
+      background: "#eef"
+    }
+  });
+
+  Render.run(render);
+  Runner.run(Runner.create(), engine);
+
+  // Anchor point
+  const anchorPoint = { x: 1000, y: -10 };
+
+  // Create invisible rope bodies
+  const group = Body.nextGroup(true);
+  const rope = Composites.stack(anchorPoint.x, anchorPoint.y + 15, 3, 8, 0, 10, (x, y) => {
+    return Bodies.rectangle(x, y, 10, 20, {
+      collisionFilter: { group: group },
+      render: { visible: false }
+    });
+  });
+
+  Composites.chain(rope, 0.5, 0, 0.5, 0, {
+    stiffness: 1,
+    length: 2,
+    render: { visible: false }
+  });
+
+  Composite.add(world, Constraint.create({
+    pointA: anchorPoint,
+    bodyB: rope.bodies[0],
+    pointB: { x: 0, y: -10 },
+    stiffness: 1,
+    render: { visible: false }
+  }));
+
+  // ID card body
+  const idCard = Bodies.rectangle(anchorPoint.x, anchorPoint.y + 300, 100, 140, {
+    collisionFilter: { group: group },
+    frictionAir: 0.02, // smooth swinging
+    render: {
+      fillStyle: '#ffffff',
+      strokeStyle: '#999',
+      lineWidth: 2
+    }
+  });
+
+  // Attach rope to TOP of card so it swings naturally
+  const ropeToCard = Constraint.create({
+    bodyA: rope.bodies[rope.bodies.length - 1],
+    bodyB: idCard,
+    pointA: { x: 0, y: 10 },
+    pointB: { x: 0, y: -15 },
+    stiffness: 0.9,
+    render: { visible: false }
+  });
+
+  Composite.add(world, [rope, idCard, ropeToCard]);
+
+  // Mouse drag
+  const mouse = Mouse.create(render.canvas);
+  const mouseConstraint = MouseConstraint.create(engine, {
+    mouse,
+    constraint: {
+      stiffness: 0.2,
+      render: { visible: false }
+    }
+  });
+  Composite.add(world, mouseConstraint);
+  render.mouse = mouse;
+
+  // Create the stripe pattern canvas
+  const patternCanvas = document.createElement('canvas');
+  patternCanvas.width = 20;
+  patternCanvas.height = 20;
+  const pctx = patternCanvas.getContext('2d');
+  pctx.fillStyle = '#444';
+  pctx.fillRect(0, 0, 20, 20);
+  pctx.strokeStyle = '#888';
+  pctx.lineWidth = 3;
+  pctx.beginPath();
+  pctx.moveTo(0, 20);
+  pctx.lineTo(20, 0);
+  pctx.stroke();
+
+  const photo = new Image();
+  photo.src = 'https://ultravet-pet.com/wp-content/uploads/2023/07/cat-breed-01-800x800.webp';
+
+
+
+  // Custom rendering: strap, card, photo, text
+  Events.on(render, 'afterRender', () => {
+    const ctx = render.context;
+
+    // Draw textured rope strap
+    const last = rope.bodies[rope.bodies.length - 1];
+    const x1 = anchorPoint.x;
+    const y1 = anchorPoint.y;
+    const x2 = last.position.x;
+    const y2 = last.position.y + 10;
+
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx);
+
+    ctx.save();
+    ctx.translate(x1, y1);
+    ctx.rotate(angle);
+
+    const pattern = ctx.createPattern(patternCanvas, 'repeat');
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, -8, length, 17);
+    ctx.restore();
+
+    // Draw ID card
+    const pos = idCard.position;
+    const angleCard = idCard.angle;
+    ctx.save();
+    ctx.translate(pos.x, pos.y);
+    ctx.rotate(angleCard);
+
+    // Tab/clip
+    ctx.fillStyle = '#888';
+    ctx.fillRect(-20, -80, 40, 15);
+
+    // Card background
+    ctx.fillStyle = '#fff';
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 2;
+    ctx.fillRect(-50, -60, 100, 120);
+    ctx.strokeRect(-50, -60, 100, 120);
+
+    // Photo box
+    if (photo.complete) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(-20, -50, 40, 40);
+      ctx.clip();
+      ctx.drawImage(photo, -20, -50, 40, 40);
+      ctx.restore();
+    } else {
+      ctx.fillStyle = '#ddd';
+      ctx.fillRect(-20, -50, 40, 40);
+    }
+
+    // Text
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 12px Arial';
+    ctx.fillText('วิศรุต ดาราไก่', -38, 10);
+    ctx.font = '11px Arial';
+    ctx.fillText('ID: 6611425034', -40, 25);
+    ctx.fillText('นักศึกษา', -25, 40);
+
+    ctx.restore();
+  });
+
+  Body.setInertia(idCard, 1000); // Higher = harder to rotate
+
+  // Responsive
+  window.addEventListener('resize', () => {
+    render.canvas.width = window.innerWidth;
+    render.canvas.height = window.innerHeight;
+    anchorPoint.x = window.innerWidth / 2;
+  });
+</script>
 </body>
 </html>
